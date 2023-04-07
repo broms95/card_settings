@@ -32,6 +32,7 @@ class CardSettingsListPicker<T> extends FormField<T>
     required this.items,
     this.showMaterialonIOS,
     this.fieldPadding,
+    this.contentPadding,
   }) : super(
             key: key,
             initialValue: initialItem ?? null,
@@ -90,6 +91,9 @@ class CardSettingsListPicker<T> extends FormField<T>
   /// provides padding to wrap the entire field
   @override
   final EdgeInsetsGeometry? fieldPadding;
+
+  @override
+  final EdgeInsetsGeometry? contentPadding;
 
   @override
   _CardSettingsListPickerState<T> createState() =>
@@ -248,11 +252,14 @@ class _CardSettingsListPickerState<T> extends FormFieldState<T> {
         requiredIndicator: widget.requiredIndicator,
         errorText: errorText,
         fieldPadding: widget.fieldPadding,
-        content: Text(
-          content,
-          style: contentStyle(context, value, widget.enabled),
-          textAlign:
-              widget.contentAlign ?? CardSettings.of(context)?.contentAlign,
+        content: Container(
+          padding: widget.contentPadding,
+          child: Text(
+            content,
+            style: contentStyle(context, value, widget.enabled),
+            textAlign:
+                widget.contentAlign ?? CardSettings.of(context)?.contentAlign,
+          ),
         ),
         pickerIcon: (widget.enabled) ? Icons.arrow_drop_down : null,
       ),
